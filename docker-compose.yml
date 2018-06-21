@@ -1,0 +1,38 @@
+version: '2.1'
+services:
+  xdag-proxy:
+    container_name: xdag-proxy
+    image: nginx:1.12
+    ports:
+      - "80:80"
+    depends_on:
+      - xdag-pool
+      - xdag-mysql-server
+    links:
+      - xdag-mysql-server:mysql
+    volumes:
+      - ./xdag-proxy/container-files/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
+    volumes_from:
+      - xdag-pool
+  xdag-pool:
+    container_name: xdag-pool
+    image: melthaw/xdag:latest
+  xdag-mysql-server:
+    container_name: xdag-mysql-server
+    image: mariadb:10.3.7
+    ports:
+      - "3306:3306"
+    depends_on:
+      - xdag-mysql-storage
+    volumes_from:
+      - xdag-mysql-storage
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+  xdag-mysql-storage:
+    container_name: xdag-mysql-storage
+    image: busybox:latest
+    volumes:
+      - ~/var/xdag/mysql:/var/lib/mysql
