@@ -22,11 +22,13 @@ RUN cd /var/www && \
     npm install && \
     npm run production
 
-FROM php:7.2-fpm
+FROM ubuntu:xenial
 
 LABEL maintainer "melthaw@gmail.com"
 
-RUN apt-get update && apt-get install -y git unzip && mkdir -p /var/www/openxdagpool
+RUN apt-get update && \
+    apt-get install -y git unzip curl php7.0-bcmath php7.0-cli php7.0-common php7.0-fpm php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache php7.0-readline php7.0-sqlite3 php7.0-xml php7.0-zip && \
+    mkdir -p /var/www/openxdagpool
 
 COPY --from=builder /var/www/openxdagpool/ /var/www/openxdagpool/
 

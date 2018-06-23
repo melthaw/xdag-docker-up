@@ -17,6 +17,8 @@ services:
   xdag-pool:
     container_name: xdag-pool
     image: melthaw/xdag:latest
+    ports:
+      - "9000:9000"
   xdag-mysql-server:
     container_name: xdag-mysql-server
     image: mariadb:10.3.7
