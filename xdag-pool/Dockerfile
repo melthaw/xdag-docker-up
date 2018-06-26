@@ -1,6 +1,8 @@
 ##################################
 # How to build the image?
-#
+# * go the parent dir
+# *
+# $> cd ..
 # $> docker build -f Dockerfile -t melthaw/xdag:latest .
 #
 ##################################
@@ -27,14 +29,14 @@ FROM ubuntu:xenial
 LABEL maintainer "melthaw@gmail.com"
 
 RUN apt-get update && \
-    apt-get install -y git unzip curl php7.0-bcmath php7.0-cli php7.0-common php7.0-fpm php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache php7.0-readline php7.0-sqlite3 php7.0-xml php7.0-zip && \
-    mkdir -p /var/www/openxdagpool
+    apt-get install -y git unzip curl net-tools iputils-ping vim php7.0-bcmath php7.0-cli php7.0-common php7.0-fpm php7.0-json php7.0-mbstring php7.0-mcrypt php7.0-mysql php7.0-opcache php7.0-readline php7.0-sqlite3 php7.0-xml php7.0-zip supervisor && \
+    mkdir -p /var/www/openxdagpool && \
+    mkdir -p /run/php
 
 COPY --from=builder /var/www/openxdagpool/ /var/www/openxdagpool/
+COPY .env /var/www/openxdagpool/.env
 
 RUN cd /var/www/openxdagpool && \
-    ls -a && \
-    mv .env.example .env && \
     chmod 777 storage && chmod -R 777 storage/* && \
     curl -sS https://getcomposer.org/installer | php && \
     ln -s /var/www/openxdagpool/composer.phar /usr/bin/composer && \
@@ -43,6 +45,15 @@ RUN cd /var/www/openxdagpool && \
     php artisan key:generate
 #    php artisan migrate
 
-WORKDIR /var/www/openxdagpool
+ADD container_files/etc/ /etc/
+ADD container_files/scripts/ /
+
+RUN chmod +x /*.sh
 
 VOLUME ["/var/www/openxdagpool"]
+
+WORKDIR /var/www/openxdagpool
+
+EXPOSE 9000
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
