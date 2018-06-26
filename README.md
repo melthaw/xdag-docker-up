@@ -4,7 +4,7 @@ Thanks to [OpenXDAGPool](https://github.com/kbs1/openxdagpool)
 
 # Get Started
 
-Please make sure the docker & docker-compose are ready on your machine. 
+Please make sure the `docker` & `docker-compose` are ready on your machine. 
 
 > Docker CE 17.xx is recommended.
 
@@ -100,7 +100,7 @@ DB_PASSWORD | Xdag@2018
 
 # Backup
 
-By default the MYSQL db is stored under `${USER_HOME}//var/xdag/mysql`.
+By default the MYSQL db is stored under `${USER_HOME}/var/xdag/mysql`.
 You can customize the volumes mapping in docker-compose.yml as follow.
 
 ```
