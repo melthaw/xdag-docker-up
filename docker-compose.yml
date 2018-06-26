@@ -8,6 +8,8 @@ services:
     depends_on:
       - xdag-pool
       - xdag-mysql
+    links:
+      - xdag-pool
     volumes:
       - ./xdag-proxy/container-files/etc/nginx/conf.d/default.conf:/etc/nginx/conf.d/default.conf
     volumes_from:
