@@ -30,9 +30,16 @@ docker-compose up -d
 
 * 2.do artisan migrate
 
+
+Get in the container
 ```
 docker exec -it xdag-pool bash
+```
+
+Run migrate and exit the container
+```
 php artisan migrate
+exit
 ```
 
 * 3.shutdown 
