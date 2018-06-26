@@ -65,11 +65,10 @@ docker-compose stop
 
 URL | description
 ---|---
+http://127.0.0.1/index.php | home page
 http://127.0.0.1/index.php/login | login
 http://127.0.0.1/index.php/register | register ( setup the admin at the first time)
-http://127.0.0.1/index.php | home page (after login)
  
-
 # Upgrade 
  
 Here is the way to make an upgrade.
