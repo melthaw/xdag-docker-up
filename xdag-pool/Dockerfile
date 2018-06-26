@@ -1,12 +1,9 @@
 ##################################
 # How to build the image?
-# * go the parent dir
-# *
-# $> cd ..
+#
 # $> docker build -f Dockerfile -t melthaw/xdag:latest .
 #
 ##################################
-#FROM mkenney/npm:node-7-debian as builder
 FROM node:8.11 as builder
 
 LABEL maintainer "melthaw@gmail.com"
